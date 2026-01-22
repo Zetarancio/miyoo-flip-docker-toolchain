@@ -1,0 +1,17 @@
+services:
+  flip-build:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        UID: "${UID:-1000}"
+        GID: "${GID:-1000}"
+    environment:
+      TOOLCHAIN: /opt/flip
+      SYSROOT: /sysroot
+    volumes:
+        - ./flip-toolchain-v1.0:/opt/flip:ro
+        - ./flip-sysroot:/device-sysroot:ro
+        - ./work:/work:rw
+    working_dir: /work
+    tty: true
